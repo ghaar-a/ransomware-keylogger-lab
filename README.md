@@ -1,216 +1,216 @@
-# ransomware-keylogger-lab 
+# ransomware-keylogger-lab
 # 🛡️ Cybersecurity Lab em Python
 
-### Simulação Controlada de Ransomware e Keylogger com Foco em Defesa
+### Análise Prática de Comportamentos de Ransomware e Keylogger
 
 ---
 
 ## 📌 Visão Geral
 
-Este projeto tem como objetivo construir um **laboratório prático de cibersegurança**, utilizando Python, para demonstrar — de forma **ética, controlada e educacional** — como determinadas ameaças digitais operam.
+Este projeto apresenta um laboratório prático em Python com foco na análise de comportamentos típicos de ameaças digitais, especificamente:
 
-Mais importante do que simular ataques, este projeto enfatiza **detecção, mitigação e prevenção**, preparando o desenvolvedor para compreender comportamentos maliciosos e atuar defensivamente no mundo real.
+* **Ransomware (criptografia de arquivos)**
+* **Keylogger (captura de entrada do usuário)**
 
----
-
-## 🎯 Objetivos do Projeto
-
-* Simular o comportamento de um **ransomware** em ambiente controlado
-* Demonstrar a captura de entradas de teclado em modo **educacional e transparente**
-* Implementar mecanismos básicos de **detecção de atividades suspeitas**
-* Consolidar conhecimentos sobre **criptografia, monitoramento e segurança de sistemas**
-* Desenvolver uma visão crítica sobre **ameaças reais e suas defesas**
+O objetivo não é desenvolver malware funcional, mas sim **compreender como essas ameaças operam internamente**, permitindo a construção de estratégias eficazes de defesa.
 
 ---
 
-## ⚠️ Aviso Importante (Ética e Segurança)
+## 🎯 Objetivos
 
-Este projeto foi desenvolvido com propósito **estritamente educacional**.
+* Demonstrar como arquivos podem ser criptografados e restaurados
+* Explorar técnicas de captura de entrada via teclado
+* Analisar riscos associados à exfiltração de dados
+* Desenvolver pensamento voltado à **detecção e mitigação**
 
-🔒 Garantias:
+---
 
-* Nenhuma funcionalidade furtiva foi implementada
-* Não há coleta de dados sensíveis reais
-* Não ocorre envio de dados para redes externas
-* Todas as simulações são limitadas a ambientes controlados
+## ⚠️ Aviso de Segurança e Ética
 
-🚫 Este projeto **não deve ser utilizado para fins maliciosos**.
+Este projeto possui finalidade **exclusivamente educacional**.
+
+🚫 O uso indevido dessas técnicas pode violar leis e privacidade.
+🔒 Recomenda-se executar apenas em ambiente controlado (ex: máquina virtual).
+
+O componente de envio de dados deve ser interpretado como **estudo de comportamento malicioso**, não como prática recomendada.
 
 ---
 
 ## 🏗️ Estrutura do Projeto
 
-```
+```bash
 cyber-lab/
 │
 ├── ransomware_sim/
-│   ├── encryptor.py
 │   ├── decryptor.py
-│   ├── file_generator.py
-│   └── ransom_note.txt
+│   └── chave.key
 │
 ├── keylogger_sim/
-│   ├── key_capture.py
-│   ├── logger.py
-│   └── demo_mode.py
+│   ├── keylogger_file.py
+│   ├── keylogger_email.py
+│   └── log.txt
 │
-├── defense/
-│   ├── monitor.py
-│   ├── heuristics.py
-│   └── report.md
-│
-├── utils/
-│   └── crypto_utils.py
-│
-├── main.py
-└── README.md
+└── test_files/
 ```
 
 ---
 
-## 🔐 Módulo 1 — Ransomware Simulado
+## 🔐 Módulo 1 — Ransomware (Simulação de Descriptografia)
 
 ### 📖 Descrição
 
-Este módulo simula, de forma segura, o comportamento de um ransomware, utilizando criptografia para bloquear arquivos em um diretório controlado.
+Este módulo implementa a **fase de recuperação de arquivos**, utilizando criptografia simétrica com a biblioteca `cryptography`.
 
-### ⚙️ Funcionalidades
+### ⚙️ Funcionamento
 
-* Geração de arquivos de teste
-* Criptografia de arquivos com chave local
-* Descriptografia dos arquivos
-* Exibição de mensagem de “resgate” (educativa)
+* Carrega uma chave previamente gerada (`chave.key`)
+* Percorre arquivos dentro do diretório `test_files`
+* Descriptografa os arquivos utilizando `Fernet`
 
-### 🧠 Conceitos abordados
+### 🔍 Destaques do Código
 
-* Criptografia simétrica (ex: AES/Fernet)
+* Uso de `os.walk()` para varredura de diretórios
+* Exclusão de arquivos críticos (ex: `.key`, script principal)
+* Processamento automático em lote
+
+### 🧠 Conceitos
+
+* Criptografia simétrica (Fernet/AES)
 * Manipulação de arquivos
-* Automação de processos em lote
+* Automação de processos
 
 ---
 
-## ⌨️ Módulo 2 — Captura de Teclas (Modo Educacional)
+## ⌨️ Módulo 2 — Keylogger (Captura de Teclas)
 
-### 📖 Descrição
-
-Simulação de captura de entrada do teclado, com total transparência ao usuário.
-
-### ⚙️ Funcionalidades
-
-* Captura de eventos de teclado em tempo real
-* Registro em arquivo `.txt`
-* Execução com aviso explícito ao usuário
-
-### 🔒 Limitações intencionais
-
-* Sem execução em segundo plano
-* Sem ocultação
-* Sem envio de dados externos
-* Sem persistência no sistema
-
-### 🧠 Conceitos abordados
-
-* Hooks de teclado
-* Logging de eventos
-* Privacidade e ética em software
+Este módulo é dividido em duas abordagens.
 
 ---
 
-## 🛡️ Módulo 3 — Detecção e Defesa
+### 📄 2.1 Registro Local (Arquivo)
 
-### 📖 Descrição
-
-Implementação de mecanismos simples de monitoramento para identificar comportamentos suspeitos semelhantes a malware.
+Captura eventos do teclado e armazena em `log.txt`.
 
 ### ⚙️ Funcionalidades
 
-* Monitoramento de alterações em arquivos
-* Identificação de atividade anômala
-* Geração de alertas
+* Captura caracteres digitados
+* Tratamento de teclas especiais:
 
-### 🔍 Heurísticas utilizadas
+  * Espaço → `" "`
+  * Enter → `\n`
+  * Tab → `\t`
+  * ESC → `[ESC]`
+* Ignora teclas modificadoras (Shift, Ctrl, Alt)
 
-* Modificação em massa de arquivos
-* Alterações rápidas de extensões
-* Frequência elevada de escrita em disco
-* Captura contínua de entradas
+### 🧠 Conceitos
 
-### 🧠 Conceitos abordados
+* Event listeners (`pynput`)
+* Logging de entrada
+* Tratamento de eventos
 
-* Detecção baseada em comportamento
-* Heurística em segurança
-* Fundamentos de EDR (Endpoint Detection and Response)
+---
+
+### 📡 2.2 Simulação de Exfiltração (Estudo)
+
+⚠️ **Este componente representa comportamento típico de malware e deve ser tratado apenas como análise teórica.**
+
+### 📖 Descrição
+
+* Armazena entradas em memória
+* Periodicamente tenta enviar os dados por e-mail
+
+### ⚠️ Riscos Demonstrados
+
+* Vazamento de dados sensíveis
+* Comprometimento de credenciais
+* Monitoramento invisível do usuário
+
+### 🧠 Conceitos
+
+* Automação com `Timer`
+* Uso de SMTP
+* Exfiltração de dados
 
 ---
 
 ## 🔄 Fluxo de Execução
 
-1. Gerar arquivos de teste
-2. Executar criptografia (simulação de ransomware)
-3. Analisar impacto nos arquivos
-4. Executar descriptografia
-5. Iniciar captura de teclado (modo visível)
-6. Executar módulo de monitoramento
-7. Analisar logs e alertas
+1. Arquivos são preparados em `test_files/`
+2. Processo de descriptografia é executado
+3. Keylogger captura entradas localmente
+4. (Teórico) dados podem ser enviados periodicamente
+5. Logs são analisados
+
+---
+
+## 🛡️ Análise de Segurança
+
+### 🔍 Indicadores de Comprometimento (IoCs)
+
+* Arquivos sendo modificados em massa
+* Criação de arquivos `.key`
+* Processos acessando teclado constantemente
+* Tráfego SMTP suspeito
+
+---
+
+## 🧱 Medidas de Defesa
+
+### 🖥️ No sistema
+
+* Uso de antivírus/EDR
+* Monitoramento de processos
+* Controle de permissões
+
+### 🌐 Na rede
+
+* Bloqueio de SMTP não autorizado
+* Firewall com inspeção de tráfego
+
+### 👤 No usuário
+
+* Evitar executar arquivos desconhecidos
+* Uso de autenticação multifator
+* Conscientização em segurança
 
 ---
 
 ## 🧪 Tecnologias Utilizadas
 
 * Python 3.x
-* Bibliotecas padrão (`os`, `time`, `logging`)
-* Biblioteca de criptografia (ex: `cryptography`)
-* Biblioteca de captura de teclado (ex: `pynput`, em modo controlado)
+* `cryptography` (Fernet)
+* `pynput` (captura de teclado)
+* `smtplib` (simulação de envio)
 
 ---
 
-## 📊 Resultados Esperados
+## 🚀 Possíveis Melhorias
 
-Ao final do projeto, espera-se que o desenvolvedor seja capaz de:
-
-* Entender como ataques podem ser estruturados
-* Identificar padrões de comportamento malicioso
-* Aplicar conceitos de defesa em sistemas reais
-* Desenvolver pensamento crítico em segurança
-
----
-
-## 🛡️ Medidas de Prevenção (Mundo Real)
-
-* Uso de antivírus e EDR
-* Backups regulares e isolados
-* Atualizações de sistema
-* Restrição de permissões
-* Monitoramento contínuo
-* Conscientização do usuário
-
----
-
-## 🚀 Possíveis Extensões
-
-* Dashboard de monitoramento (CLI ou Web)
-* Integração com ferramentas de log (SIEM)
-* Uso de Machine Learning para detecção
-* Simulação de outros vetores de ataque
+* Implementar módulo de detecção em tempo real
+* Criar dashboard de monitoramento
+* Adicionar logs estruturados
+* Simular resposta automatizada (bloqueio de processo)
 
 ---
 
 ## 🤝 Conclusão
 
-Este projeto vai além da implementação técnica: ele representa uma jornada de aprendizado sobre **como ataques funcionam — e principalmente como se defender deles**.
+Este projeto demonstra, de forma prática, como ameaças digitais podem operar em nível técnico.
 
-A compreensão prática desses conceitos é essencial para qualquer profissional que deseja atuar com desenvolvimento seguro, análise de vulnerabilidades ou cibersegurança.
+Mais importante, ele reforça que:
+
+> **Compreender o ataque é o primeiro passo para construir uma defesa eficaz.**
 
 ---
 
 ## 📎 Licença
 
-Este projeto é de uso educacional. Recomenda-se a adoção de uma licença como MIT para compartilhamento.
+Uso educacional recomendado. Sugere-se licença MIT.
 
 ---
 
 ## 👤 Autor
 
-Desenvolvido como parte de estudos práticos em cibersegurança e programação em Python.
+Projeto desenvolvido para fins de estudo em cibersegurança, com foco em análise prática e defesa de sistemas.
 
 ---
